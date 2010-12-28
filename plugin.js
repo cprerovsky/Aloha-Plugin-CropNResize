@@ -47,53 +47,14 @@ GENTICS.Aloha.CropNResize.restoreProps = [];
  * resized callback is triggered right after the user finished resizing the image
  * @param image jquery image object 
  */
-GENTICS.Aloha.CropNResize.onResized = function (image) {
-	image.attr('src',
-			'http://dev42.office:91/GenticsImageStore/' +
-			image.width() + '/' +
-			image.height() + '/' +
-			'cropandresize/force/' +
-			'0/0/500/391/' +
-			//image.width() + '/' +
-			//image.height() + '/' +
-			image.attr('src')
-	);
-};
+GENTICS.Aloha.CropNResize.onResized = function (image) {};
 
-/**
- * CropNResize plugin integration
- * 
- * GenticsImageStore URL looks like:
- * 
- * http://SERVER/GenticsImageStore
- * /300 - width
- * /200 - height
- * /cropandresize - mode
- * /force - resizemode
- * /20 - crop start left
- * /20 - crop start top
- * /100 - crop width
- * /100 - crop height
- * /http://dev42.office:91/node_5_stable/?sid=hXjD3HoJN31Bnam&time=1293543192&do=16000&id=214&keepsid=1 - img url
- */
 /**
  * crop callback is triggered after the user clicked accept to accept his crop
  * @param image jquery image object reference
  * @param props cropping properties
  */
-GENTICS.Aloha.CropNResize.onCropped = function (image, props) {
-	image.attr('src',
-		'http://dev42.office:91/GenticsImageStore/' +
-		image.width() + '/' +
-		image.height() + '/' +
-		'cropandresize/force/' +
-		props.x + '/' +
-		props.y + '/' +
-		props.w + '/' +
-		props.h + '/' +
-		image.attr('src')
-	);
-};
+GENTICS.Aloha.CropNResize.onCropped = function (image, props) {};
 
 /**
  * button references
