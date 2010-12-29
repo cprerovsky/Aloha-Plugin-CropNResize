@@ -87,6 +87,8 @@ GENTICS.Aloha.CropNResize.init = function() {
 	
 	// create image scope
 	GENTICS.Aloha.FloatingMenu.createScope('GENTICS.Aloha.image', ['GENTICS.Aloha.global']);
+	
+	// TODO this approach is a bit too generous - there must be an option to set the filter which images to edit
 	jQuery('img').mouseup(function(e) {
 		that.focus(e);
 		e.stopPropagation();
@@ -313,7 +315,7 @@ GENTICS.Aloha.CropNResize.endResize = function () {
  */
 GENTICS.Aloha.CropNResize.focus = function (e) {
 	GENTICS.Aloha.FloatingMenu.setScope('GENTICS.Aloha.image');
-	this.obj = jQuery(e.srcElement);
+	this.obj = jQuery(e.target);
 	this.restoreProps.push({
 		obj : e.srcElement,
 		src : this.obj.attr('src'),
