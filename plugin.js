@@ -57,6 +57,16 @@ GENTICS.Aloha.CropNResize.onResized = function (image) {};
 GENTICS.Aloha.CropNResize.onCropped = function (image, props) {};
 
 /**
+ * reset callback is triggered before the internal reset procedure is applied
+ * if this function returns true, then the reset has been handled by the callback
+ * which means that no other reset will be applied
+ * if false is returned the internal reset procedure will be applied
+ * @param image jquery image object reference
+ * @return true if a reset has been applied, flase otherwise
+ */
+GENTICS.Aloha.CropNResize.onReset = function (image) { return false; };
+
+/**
  * button references
  */
 GENTICS.Aloha.CropNResize.cropButton = null;
@@ -70,10 +80,10 @@ GENTICS.Aloha.CropNResize.init = function() {
 	
 	// load additional js libs
 	jQuery('head').append(
-		'<script type="text/javascript" src="http://dev42.office:91/jqueryui/js/jquery-ui-1.8.7.custom.min.js"></script>' + 
-		'<link rel="stylesheet" href="http://dev42.office:91/jqueryui/css/ui-lightness/jquery-ui-1.8.7.custom.css" />' + 
-		'<script type="text/javascript" src="http://dev42.office:91/Jcrop/js/jquery.Jcrop.js"></script>' + 
-		'<link rel="stylesheet" href="http://dev42.office:91/Jcrop/css/jquery.Jcrop.css" />');
+		'<script type="text/javascript" src="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/js/jquery-ui-1.8.7.custom.min.js"></script>' + 
+		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/ui-lightness/jquery-ui-1.8.7.custom.css" />' + 
+		'<script type="text/javascript" src="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/js/jquery.Jcrop.min.js"></script>' + 
+		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/jquery.Jcrop.css" />');
 	
 	// create image scope
 	GENTICS.Aloha.FloatingMenu.createScope('GENTICS.Aloha.image', ['GENTICS.Aloha.global']);
@@ -185,6 +195,12 @@ GENTICS.Aloha.CropNResize.init = function() {
 GENTICS.Aloha.CropNResize.reset = function () {
 	this.endCrop();
 	this.endResize();
+	
+	if (this.onReset(this.obj)) {
+		// the external reset procedure has already performed a reset, so there is no need to apply an internal reset
+		return;
+	}
+	
 	for (var i=0;i<this.restoreProps.length;i++) {
 		// restore from restoreProps if there is a match
 		if (this.obj.get(0) === this.restoreProps[i].obj) {
