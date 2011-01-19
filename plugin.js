@@ -225,7 +225,9 @@ GENTICS.Aloha.CropNResize.initCropButtons = function() {
 			btns.fadeIn('slow');
 		}
 		
-		off.top = parseInt(off.top - 30);
+		// move the icons to the bottom right side
+		off.top = parseInt(off.top + jt.height() + 3);
+		off.left = parseInt(off.left + jt.width() - 55);
 		
 		// comparison to old values hinders flickering bug in FF
 		if (oldLeft != off.left || oldTop != off.top) {

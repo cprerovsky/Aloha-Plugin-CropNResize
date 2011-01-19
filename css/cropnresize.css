@@ -13,12 +13,22 @@ button.cnr_reset {
 	display: none;
 }
 #GENTICS_CropNResize_btns button {
-	background: transparent;
-	border: none;
+	background: #ededed;
+	border: 1px solid #c6c6c6;
 	cursor: pointer;
 	color: #96ca03;
-	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
-	font-size: 20px;
+	text-shadow: -1px -1px 1px rgba(0,0,0,0.3);
+	font-size: 16px;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	padding: 0px;
+	width: 23px;
+	height: 23px;
+	margin-right: 3px;
+}
+#GENTICS_CropNResize_btns button.cnr_crop_apply {
+	padding-left: 2px;
 }
 #GENTICS_CropNResize_btns button.cnr_crop_cancel {
 	color: #c92404;
