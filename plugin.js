@@ -70,7 +70,6 @@ GENTICS.Aloha.CropNResize.onReset = function (image) { return false; };
  * button references
  */
 GENTICS.Aloha.CropNResize.cropButton = null;
-GENTICS.Aloha.CropNResize.resizeButton = null;
 
 GENTICS.Aloha.CropNResize.interval = null;
 
@@ -114,32 +113,6 @@ GENTICS.Aloha.CropNResize.init = function() {
 		this.settings.aspectRatio = true;
 	}
 	
-	
-	/*
-	 * resize stuff goes here
-	 */
-	this.resizeButton = new GENTICS.Aloha.ui.Button({
-		'size' : 'small',
-		'tooltip' : this.i18n('Resize'),
-		'toggle' : true,
-		'iconClass' : 'cnr_resize',
-		'onclick' : function (btn, event) {
-			if (btn.pressed) {
-				that.resize();
-			} else {
-				that.endResize();
-			}
-		}
-	});
-
-	// add to floating menu
-	GENTICS.Aloha.FloatingMenu.addButton(
-		'GENTICS.Aloha.image',
-		this.resizeButton,
-		GENTICS.Aloha.i18n(GENTICS.Aloha, 'floatingmenu.tab.image'),
-		10
-	);
-	
 	/*
 	 * image cropping stuff goes here
 	 */
@@ -182,6 +155,12 @@ GENTICS.Aloha.CropNResize.init = function() {
 		GENTICS.Aloha.i18n(GENTICS.Aloha, 'floatingmenu.tab.image'),
 		30
 	);
+	
+	GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'selectionChanged', function(event, rangeObject, originalEvent) {
+		if (!jQuery(originalEvent.target).hasClass('ui-resizable-handle')) {
+			that.endResize();
+		}
+	});
 };
 
 /**
@@ -258,9 +237,8 @@ GENTICS.Aloha.CropNResize.destroyCropButtons = function () {
 GENTICS.Aloha.CropNResize.crop = function () {
 	var that = this;
 	
+	this.endResize();
 	this.initCropButtons();
-	this.resizeButton.extButton.toggle(false);
-	this.resizeButton.extButton.disable();
 
 	this.jcAPI = jQuery.Jcrop(this.obj, {
 		onSelect : function () {
@@ -284,7 +262,7 @@ GENTICS.Aloha.CropNResize.endCrop = function () {
 	
 	this.destroyCropButtons();
 	this.cropButton.extButton.toggle(false);
-	this.resizeButton.extButton.enable();
+	this.resize();
 };
 
 /**
@@ -304,6 +282,7 @@ __proto__: Object
 	 */
 	this.onCropped(this.obj, this.jcAPI.tellSelect());
 	this.endCrop();
+	this.resize();
 };
 /**
  * start resizing
@@ -319,13 +298,9 @@ __proto__: Object
 GENTICS.Aloha.CropNResize.resize = function () {
 	var that = this;
 	
-	this.cropButton.extButton.toggle(false);
-	this.cropButton.extButton.disable();
-	
 	this.obj.resizable({
 		stop : function (event, ui) {
 			that.onResized(that.obj);
-			that.endResize();
 			
 			// this is so ugly, but I could'nt figure out how to do it better... 
 			setTimeout(function () {
@@ -349,9 +324,6 @@ GENTICS.Aloha.CropNResize.resize = function () {
  */
 GENTICS.Aloha.CropNResize.endResize = function () {
 	this.obj.resizable("destroy");
-	
-	this.resizeButton.extButton.toggle(false);
-	this.cropButton.extButton.enable();
 };
 
 /**
@@ -366,6 +338,7 @@ GENTICS.Aloha.CropNResize.focus = function (e) {
 		width : this.obj.width(),
 		height : this.obj.height()
 	});
+	this.resize(); // init resizing by default
 	this.updateFM();
 };
 
@@ -385,4 +358,4 @@ GENTICS.Aloha.CropNResize.updateFM = function () {
 		x : o.left,
 		y : (o.top - 100)
 	});	
-}
+};
