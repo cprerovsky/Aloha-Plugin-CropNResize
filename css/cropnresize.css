@@ -7,3 +7,19 @@ button.cnr_crop.x-btn-text {
 button.cnr_reset.x-btn-text {
 	background-position: -42px -2px;
 }
+#GENTICS_CropNResize_btns {
+	z-index: 10000;
+	width: 70px;
+	display: none;
+}
+#GENTICS_CropNResize_btns button {
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	color: #96ca03;
+	text-shadow: 1px 1px 1px rgba(0,0,0,0.3);
+	font-size: 20px;
+}
+#GENTICS_CropNResize_btns button.cnr_crop_cancel {
+	color: #c92404;
+}

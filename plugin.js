@@ -72,6 +72,8 @@ GENTICS.Aloha.CropNResize.onReset = function (image) { return false; };
 GENTICS.Aloha.CropNResize.cropButton = null;
 GENTICS.Aloha.CropNResize.resizeButton = null;
 
+GENTICS.Aloha.CropNResize.interval = null;
+
 /**
  * Initialize the plugin, register the buttons
  */
@@ -220,11 +222,45 @@ GENTICS.Aloha.CropNResize.reset = function () {
 }
 
 /**
+ * initialize crop confirm and cancel buttons and move them to the tracker position
+ */
+GENTICS.Aloha.CropNResize.initCropButtons = function() {
+	jQuery('body').append(
+			'<div id="GENTICS_CropNResize_btns">' + 
+			'<button class="cnr_crop_apply" title="' + this.i18n('Accept') + 
+				'" onclick="GENTICS.Aloha.CropNResize.acceptCrop();">&#10004;</button>' +
+			'<button class="cnr_crop_cancel" title="' + this.i18n('Cancel') + 
+				'" onclick="GENTICS.Aloha.CropNResize.endCrop();">&#10006;</button>' + 
+			'</div>'
+	);
+	
+	var btns = jQuery('#GENTICS_CropNResize_btns');
+	this.interval = setInterval(function () {
+		var jt = jQuery('.jcrop-tracker:first');
+		var off = jt.offset();
+		if (jt.css('height') != '0px' && jt.css('width') != '0px') {
+			btns.fadeIn('slow');
+		}
+		off.top = off.top - 30;
+		btns.offset(off);
+	}, 10);
+};
+
+/**
+ * destroy crop confirm and cancel buttons
+ */
+GENTICS.Aloha.CropNResize.destroyCropButtons = function () {
+	jQuery('#GENTICS_CropNResize_btns').remove();
+	clearInterval(this.interval);
+};
+
+/**
  * this will be called, when the crop button is pressed, and cropping starts
  */
 GENTICS.Aloha.CropNResize.crop = function () {
 	var that = this;
 	
+	this.initCropButtons();
 	this.resizeButton.extButton.toggle(false);
 	this.resizeButton.extButton.disable();
 	this.acceptCropButton.show();
@@ -241,7 +277,6 @@ GENTICS.Aloha.CropNResize.crop = function () {
 			}, 10);
 		}
 	});
-	
 };
 
 /**
@@ -254,6 +289,7 @@ GENTICS.Aloha.CropNResize.endCrop = function () {
 		this.jcAPI = null;
 	}
 	
+	this.destroyCropButtons();
 	this.cropButton.extButton.toggle(false);
 	this.resizeButton.extButton.enable();
 	this.acceptCropButton.hide();
