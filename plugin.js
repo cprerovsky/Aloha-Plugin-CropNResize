@@ -217,7 +217,7 @@ GENTICS.Aloha.CropNResize.initCropButtons = function() {
 	
 	var btns = jQuery('#GENTICS_CropNResize_btns');
 	var oldLeft = 0;
-	var oldYTop = 0;
+	var oldTop = 0;
 	this.interval = setInterval(function () {
 		var jt = jQuery('.jcrop-tracker:first');
 		var off = jt.offset();
