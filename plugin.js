@@ -160,25 +160,6 @@ GENTICS.Aloha.CropNResize.init = function() {
 		20
 	);
 	
-	this.acceptCropButton = new GENTICS.Aloha.ui.Button({
-		'label' : 'Accept',
-		'size' : 'small',
-		'tooltip' : this.i18n('Accept'),
-		'toggle' : false,
-		'onclick' : function (btn, event) {
-			that.acceptCrop();
-		},
-		'visible' : false
-	});
-
-	// add to floating menu
-	GENTICS.Aloha.FloatingMenu.addButton(
-		'GENTICS.Aloha.image',
-		this.acceptCropButton,
-		GENTICS.Aloha.i18n(GENTICS.Aloha, 'floatingmenu.tab.image'),
-		20
-	);
-	
 	/*
 	 * add a reset button
 	 */
@@ -263,11 +244,6 @@ GENTICS.Aloha.CropNResize.crop = function () {
 	this.initCropButtons();
 	this.resizeButton.extButton.toggle(false);
 	this.resizeButton.extButton.disable();
-	this.acceptCropButton.show();
-
-	// the floating menu won't update properly whithout this
-	GENTICS.Aloha.FloatingMenu.doLayout(); 
-	GENTICS.Aloha.FloatingMenu.refreshShadow();
 
 	this.jcAPI = jQuery.Jcrop(this.obj, {
 		onSelect : function () {
@@ -292,11 +268,6 @@ GENTICS.Aloha.CropNResize.endCrop = function () {
 	this.destroyCropButtons();
 	this.cropButton.extButton.toggle(false);
 	this.resizeButton.extButton.enable();
-	this.acceptCropButton.hide();
-	
-	// the crop button won't hide properly without this :(
-	GENTICS.Aloha.FloatingMenu.doLayout(); 
-	GENTICS.Aloha.FloatingMenu.refreshShadow();
 };
 
 /**
