@@ -83,7 +83,8 @@ GENTICS.Aloha.CropNResize.init = function() {
 		'<script type="text/javascript" src="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/js/jquery-ui-1.8.7.custom.min.js"></script>' + 
 		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/ui-lightness/jquery-ui-1.8.7.custom.css" />' + 
 		'<script type="text/javascript" src="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/js/jquery.Jcrop.min.js"></script>' + 
-		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/jquery.Jcrop.css" />');
+		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/jquery.Jcrop.css" />' +
+		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/cropnresize.css" />');
 	
 	// create image scope
 	GENTICS.Aloha.FloatingMenu.createScope('GENTICS.Aloha.image', ['GENTICS.Aloha.global']);
@@ -110,10 +111,10 @@ GENTICS.Aloha.CropNResize.init = function() {
 	 * resize stuff goes here
 	 */
 	this.resizeButton = new GENTICS.Aloha.ui.Button({
-		'label' : 'Resize',
 		'size' : 'small',
 		'tooltip' : this.i18n('Resize'),
 		'toggle' : true,
+		'iconClass' : 'cnr_resize',
 		'onclick' : function (btn, event) {
 			if (btn.pressed) {
 				that.resize();
@@ -136,10 +137,10 @@ GENTICS.Aloha.CropNResize.init = function() {
 	 * image cropping stuff goes here
 	 */
 	this.cropButton = new GENTICS.Aloha.ui.Button({
-		'label' : 'Crop',
 		'size' : 'small',
-		'tooltip' : this.i18n('Resize'),
+		'tooltip' : this.i18n('Crop'),
 		'toggle' : true,
+		'iconClass' : 'cnr_crop',
 		'onclick' : function (btn, event) {
 			if (btn.pressed) {
 				that.crop();
@@ -160,7 +161,7 @@ GENTICS.Aloha.CropNResize.init = function() {
 	this.acceptCropButton = new GENTICS.Aloha.ui.Button({
 		'label' : 'Accept',
 		'size' : 'small',
-		'tooltip' : this.i18n('Resize'),
+		'tooltip' : this.i18n('Accept'),
 		'toggle' : false,
 		'onclick' : function (btn, event) {
 			that.acceptCrop();
@@ -182,10 +183,10 @@ GENTICS.Aloha.CropNResize.init = function() {
 	GENTICS.Aloha.FloatingMenu.addButton(
 		'GENTICS.Aloha.image',
 		new GENTICS.Aloha.ui.Button({
-			'label' : 'Reset',
 			'size' : 'small',
 			'tooltip' : this.i18n('Reset'),
 			'toggle' : false,
+			'iconClass' : 'cnr_reset',
 			'onclick' : function (btn, event) {
 				that.reset();
 			}
