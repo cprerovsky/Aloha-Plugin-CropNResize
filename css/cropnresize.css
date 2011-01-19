@@ -33,3 +33,11 @@ button.cnr_reset {
 #GENTICS_CropNResize_btns button.cnr_crop_cancel {
 	color: #c92404;
 }
+/*
+ * fix to use big resize handle for images
+ */
+.ui-resizable-se { 
+	width: 16px;
+	height: 16px;
+	background-position: -80px -224px !important; 
+}
