@@ -98,7 +98,9 @@ GENTICS.Aloha.CropNResize.init = function() {
 		e.stopPropagation();
 	});
 	
-	// set callbacks
+	/*
+	 * init basic settings like callbacks and options
+	 */
 	if (typeof this.settings.onResized == "function") {
 		this.onResized = this.settings.onResized;
 	}
@@ -108,6 +110,10 @@ GENTICS.Aloha.CropNResize.init = function() {
 	if (typeof this.settings.onReset == "function") {
 		this.onReset = this.settings.onReset;
 	}
+	if (typeof this.settings.aspectRatio != "boolean") {
+		this.settings.aspectRatio = true;
+	}
+	
 	
 	/*
 	 * resize stuff goes here
@@ -133,7 +139,6 @@ GENTICS.Aloha.CropNResize.init = function() {
 		GENTICS.Aloha.i18n(GENTICS.Aloha, 'floatingmenu.tab.image'),
 		10
 	);
-	
 	
 	/*
 	 * image cropping stuff goes here
@@ -302,6 +307,14 @@ __proto__: Object
 };
 /**
  * start resizing
+ * 
+ * uses a load of jQueryUI.resizable() option, which can be passed through via the plugin's settings object
+ * 		aspectRatio
+ * 		maxHeight
+ * 		minHeight
+ * 		maxWidth
+ * 		minWidth
+ *  	grid
  */
 GENTICS.Aloha.CropNResize.resize = function () {
 	var that = this;
@@ -319,7 +332,14 @@ GENTICS.Aloha.CropNResize.resize = function () {
 				GENTICS.Aloha.FloatingMenu.setScope('GENTICS.Aloha.image');
 				that.done(event);
 			}, 10);
-		}
+		},
+		// the rest of the settings is directly set through the plugin settings object
+		aspectRatio : that.settings.aspectRatio,
+ 		maxHeight : that.settings.maxHeight,
+ 		minHeight : that.settings.minHeight,
+ 		maxWidth : that.settings.maxWidth,
+ 		minWidth : that.settings.minWidth,
+ 		grid : that.settings.grid
 	});
 };
 
