@@ -1,11 +1,11 @@
 button.cnr_resize.x-btn-text, button.cnr_crop.x-btn-text, button.cnr_reset.x-btn-text {
 	background-image: url(../img/cropnresize.png);
 }
-button.cnr_crop.x-btn-text {
-	background-position: -2px -2px;
+button.cnr_crop {
+	background-position: -2px -2px !important;
 }
-button.cnr_reset.x-btn-text {
-	background-position: -42px -2px;
+button.cnr_reset {
+	background-position: -42px -2px !important;
 }
 #GENTICS_CropNResize_btns {
 	z-index: 10000;

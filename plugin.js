@@ -216,14 +216,24 @@ GENTICS.Aloha.CropNResize.initCropButtons = function() {
 	);
 	
 	var btns = jQuery('#GENTICS_CropNResize_btns');
+	var oldLeft = 0;
+	var oldYTop = 0;
 	this.interval = setInterval(function () {
 		var jt = jQuery('.jcrop-tracker:first');
 		var off = jt.offset();
 		if (jt.css('height') != '0px' && jt.css('width') != '0px') {
 			btns.fadeIn('slow');
 		}
-		off.top = off.top - 30;
-		btns.offset(off);
+		
+		off.top = parseInt(off.top - 30);
+		
+		// comparison to old values hinders flickering bug in FF
+		if (oldLeft != off.left || oldTop != off.top) {
+			btns.offset(off);
+		}
+		
+		oldLeft = off.left;
+		oldTop = off.top;
 	}, 10);
 };
 
