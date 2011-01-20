@@ -71,7 +71,15 @@ GENTICS.Aloha.CropNResize.onReset = function (image) { return false; };
  */
 GENTICS.Aloha.CropNResize.cropButton = null;
 
+/**
+ * internal interval reference
+ */
 GENTICS.Aloha.CropNResize.interval = null;
+
+/**
+ * a list of dom object currently attached
+ */
+GENTICS.Aloha.CropNResize.attachedObjects = [];
 
 /**
  * Initialize the plugin, register the buttons
@@ -89,13 +97,6 @@ GENTICS.Aloha.CropNResize.init = function() {
 	
 	// create image scope
 	GENTICS.Aloha.FloatingMenu.createScope('GENTICS.Aloha.image', ['GENTICS.Aloha.global']);
-	
-	// TODO this approach is a bit too generous - there must be an option to set the filter which images to edit
-	// TODO also add a method to add images later on
-	jQuery('img').mouseup(function(e) {
-		that.focus(e);
-		e.stopPropagation();
-	});
 	
 	/*
 	 * init basic settings like callbacks and options
@@ -156,17 +157,87 @@ GENTICS.Aloha.CropNResize.init = function() {
 		30
 	);
 	
+	// remove resize handles and cropping status when clicking somewhere else
 	GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'selectionChanged', function(event, rangeObject, originalEvent) {
 		if (!jQuery(originalEvent.target).hasClass('ui-resizable-handle')) {
 			that.endResize();
 		}
 	});
+
+	// now attach events to images
+	GENTICS.Aloha.EventRegistry.subscribe(GENTICS.Aloha, 'editableCreated', function(event, editable) {
+		// attach events to the editable
+		that.attach();
+	});
+};
+
+/**
+ * attach to elements using the given filter
+ * you may call this function subsequently if
+ * you've added new images to the content
+ * 
+ * @param selector optional jQuery selector which defines images to be used.
+ * 		the default selector is '.GENTICS_editable img', which you may as well
+ * 		override by providing the 'selector' option from the settings:
+ * 		
+ * 		// make all images in #maincontent editable
+ *  	GENTICS.Aloha.settings.plugins["com.gentics.aloha.plugins.CropNResize"].selector = '#maincontent img';
+ */
+GENTICS.Aloha.CropNResize.attach = function(selector) {
+	// if a selector has been provided we'll stick with this one
+	if (typeof selector != 'string') {
+		// check config for another default selector
+		if (typeof this.settings.selector == 'string') {
+			selector = this.settings.selector;
+		} else {
+			// use default selector
+			selector = '.GENTICS_editable img';
+		}
+	}
+
+	var that = this;
+	// now attach to objects matched by the selector
+	jQuery(selector).each(function() {
+		if (!that.isAttached(this)) {
+			var o = jQuery(this);
+			// we don't want to resize edit icons
+			if (o.parent().hasClass('GENTICS_editicon')) {
+				return true;
+			}
+			o.mouseup(function(e) {
+				that.focus(e);
+				e.stopPropagation();
+			});
+		}
+	});
+	
+};
+
+/**
+ * check whether we've already attached to a dom object
+ * @param domobj object to check for
+ * @return true if were already attached
+ */
+GENTICS.Aloha.CropNResize.isAttached = function(domobj) {
+	for (var i=0; i<this.attachedObjects.length; i++) {
+		if (this.attachedObjects[i] === domobj) {
+			return true;
+		}
+	}
+	return false;
+};
+
+/**
+ * execute cleanup routine
+ */
+GENTICS.Aloha.CropNResize.reset = function() {
+	// TODO implement me
 };
 
 /**
  * resets the image to it's initial properties
  */
-GENTICS.Aloha.CropNResize.reset = function () {
+GENTICS.Aloha.CropNResize.reset = function() {
 	this.endCrop();
 	this.endResize();
 	
