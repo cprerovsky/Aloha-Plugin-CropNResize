@@ -394,7 +394,9 @@ GENTICS.Aloha.CropNResize.resize = function () {
  * will toggle buttons accordingly and remove all markup that has been added for cropping
  */
 GENTICS.Aloha.CropNResize.endResize = function () {
-	this.obj.resizable("destroy");
+	if (this.obj) {
+		this.obj.resizable("destroy");
+	}
 };
 
 /**
