@@ -11,6 +11,7 @@ button.cnr_reset {
 	z-index: 10000;
 	width: 70px;
 	display: none;
+	position: absolute;
 }
 #GENTICS_CropNResize_btns button {
 	background: #ededed;
