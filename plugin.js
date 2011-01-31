@@ -135,7 +135,7 @@ GENTICS.Aloha.CropNResize.init = function() {
 	GENTICS.Aloha.FloatingMenu.addButton(
 		'GENTICS.Aloha.image',
 		this.cropButton,
-		GENTICS.Aloha.i18n(GENTICS.Aloha, 'floatingmenu.tab.image'),
+		this.i18n('floatingmenu.tab.image'),
 		20
 	);
 	
@@ -153,7 +153,7 @@ GENTICS.Aloha.CropNResize.init = function() {
 				that.reset();
 			}
 		}),
-		GENTICS.Aloha.i18n(GENTICS.Aloha, 'floatingmenu.tab.image'),
+		this.i18n('floatingmenu.tab.image'),
 		30
 	);
 	
