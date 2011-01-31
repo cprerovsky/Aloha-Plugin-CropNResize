@@ -89,11 +89,11 @@ GENTICS.Aloha.CropNResize.init = function() {
 	
 	// load additional js libs
 	jQuery('head').append(
-		'<script type="text/javascript" src="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/js/jquery-ui-1.8.7.custom.min.js"></script>' + 
-		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/ui-lightness/jquery-ui-1.8.7.custom.css" />' + 
-		'<script type="text/javascript" src="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/js/jquery.Jcrop.min.js"></script>' + 
-		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/jquery.Jcrop.css" />' +
-		'<link rel="stylesheet" href="' + GENTICS_Aloha_base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/cropnresize.css" />');
+		'<script type="text/javascript" src="' + GENTICS.Aloha.settings.base + 'plugins/com.gentics.aloha.plugins.CropNResize/js/jquery-ui-1.8.7.custom.min.js"></script>' + 
+		'<link rel="stylesheet" href="' + GENTICS.Aloha.settings.base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/ui-lightness/jquery-ui-1.8.7.custom.css" />' + 
+		'<script type="text/javascript" src="' + GENTICS.Aloha.settings.base + 'plugins/com.gentics.aloha.plugins.CropNResize/js/jquery.Jcrop.min.js"></script>' + 
+		'<link rel="stylesheet" href="' + GENTICS.Aloha.settings.base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/jquery.Jcrop.css" />' +
+		'<link rel="stylesheet" href="' + GENTICS.Aloha.settings.base + 'plugins/com.gentics.aloha.plugins.CropNResize/css/cropnresize.css" />');
 	
 	// create image scope
 	GENTICS.Aloha.FloatingMenu.createScope('GENTICS.Aloha.image', ['GENTICS.Aloha.global']);
